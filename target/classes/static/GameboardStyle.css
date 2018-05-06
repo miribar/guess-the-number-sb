@@ -1,0 +1,44 @@
+/*      HTML tags       */
+
+body {
+    box-sizing: border-box;
+}
+
+table, th, td {
+    margin: 0 auto;
+    border: 1px solid black;
+    width: 50%;
+    border-collapse: collapse;
+    padding: 10px;
+    table-layout: fixed;
+    line-height: 40px;
+}
+
+button {
+    font-size: large;
+}
+
+/*      HTML Id's       */
+#start-button {
+    width: 200px;
+}
+
+#guess-button {
+    width: 80px;
+}
+
+#guess-input {
+    width: 110px;
+}
+
+/*      Classes         */
+.container-div {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 500px;
+    margin: 10px;
+    text-align: center;
+    line-height: 60px;
+}
+
