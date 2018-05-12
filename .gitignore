@@ -167,7 +167,7 @@ cmake-build-release/
 *.iws
 
 # IntelliJ
-.idea/workspace.xml
+.idea/*
 out/
 
 # mpeltonen/sbt-idea plugin
