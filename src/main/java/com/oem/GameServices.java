@@ -1,5 +1,10 @@
 package com.oem;
 
 public interface GameServices {
-    Player createEntry(String name, int num_of_guesses);
+
+    Long createPlayer(Player player);
+
+    Iterable<Player> getTopTen();
+
+    void deletePlayer(Long player_id);
 }
