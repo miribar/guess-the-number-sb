@@ -10,8 +10,18 @@ public class GameServicesImpl implements GameServices {
     private GameRepository dao;
 
     @Override
-    public Player createEntry(String name, int num_of_guesses) {
-        return dao.save(new Player(null, name, num_of_guesses));
+    public Long createPlayer(Player player) {
+        return dao.save(player).getPlayer_id();
+    }
+
+    @Override
+    public Iterable<Player> getTopTen() {
+        return dao.findAll();
+    }
+
+    @Override
+    public void deletePlayer(Long player_id) {
+        dao.delete(player_id);
     }
 
 }
