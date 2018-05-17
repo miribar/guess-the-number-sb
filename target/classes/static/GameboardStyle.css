@@ -21,6 +21,8 @@ button {
 /*      HTML Id's       */
 #start-button {
     width: 200px;
+
+    text-align: center;
 }
 
 #guess-button {
