@@ -8,5 +8,7 @@ public class GuessTheNumberApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GuessTheNumberApplication.class, args);
+		
+
 	}
 }
