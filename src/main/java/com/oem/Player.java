@@ -15,7 +15,7 @@ public class Player {
     private String player_name;
     private int num_of_guesses;
 
-    public Long getPlayer_id() {
+    Long getPlayer_id() {
         return player_id;
     }
 

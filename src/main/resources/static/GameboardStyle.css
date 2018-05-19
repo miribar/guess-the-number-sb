@@ -40,5 +40,10 @@ button {
     margin: 10px;
     text-align: center;
     line-height: 60px;
+    visibility: hidden;
+}
+
+.container-div > .start-game {
+    visibility: visible;
 }
 

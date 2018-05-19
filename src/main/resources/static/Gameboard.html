@@ -8,11 +8,11 @@
     <link href="GameboardStyle.css" rel="stylesheet">
 </head>
 
-<body onload="showAll();">
+<body>
     <div class="container-div">
 
         <div class="start-game">
-            <button id=start-button type="button" onclick="alert('starts a new game')"> Start a new game </button>
+            <button id=start-button type="button" onclick="winner();"> Start a new game </button>
         </div>
 
         <div class="check-guess">
@@ -31,13 +31,13 @@
             </table>
         </div>
 
-        <div>
+        <div id="get-player-details">
             <br>
-            -- here, in case of win, we'll get player details. Meantime we'll get them into textboxes  --
+            <!-- here, in case of win, we'll get player details  -->
             <br>
             <input id="player-name" type="text" placeholder="Player's name">
             <input id="num-of-guesses" type="text" placeholder="Final num of guesses (<20)">
-            <button id="add-player-btn" onclick="addPlayer()" class="add-player-btn"> Add player </button>
+            <button id="add-player-btn" onclick="addPlayer();" class="add-player-btn"> Add player </button>
         </div>
 
         <div id="high-scores-table">

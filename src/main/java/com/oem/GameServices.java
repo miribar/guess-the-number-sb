@@ -1,10 +1,11 @@
 package com.oem;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public interface GameServices {
 
-    Long createPlayer(Player player);
+    void createGame(AtomicLong gameId, Game game);
 
-    Iterable<Player> getTopTen();
+    Game fetchGame(AtomicLong gameId);
 
-    void deletePlayer(Long player_id);
 }

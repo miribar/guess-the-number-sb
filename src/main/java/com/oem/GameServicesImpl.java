@@ -1,27 +1,23 @@
 package com.oem;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.HashMap;
+import java.util.concurrent.atomic.AtomicLong;
 
 @Service
 public class GameServicesImpl implements GameServices {
 
-    @Autowired
-    private GameRepository dao;
+    AtomicLong gameId = new AtomicLong();
+    private HashMap<AtomicLong, Game> gameDao = new HashMap<AtomicLong, Game>();
 
     @Override
-    public Long createPlayer(Player player) {
-        return dao.save(player).getPlayer_id();
+    public void createGame(AtomicLong gameId, Game game) {
+        gameId.getAndIncrement();
+        this.gameDao.put(gameId, game);
     }
 
     @Override
-    public Iterable<Player> getTopTen() {
-        return dao.findAll();
+    public Game fetchGame(AtomicLong gameId) {
+        return this.gameDao.get(gameId);
     }
-
-    @Override
-    public void deletePlayer(Long player_id) {
-        dao.delete(player_id);
-    }
-
 }
