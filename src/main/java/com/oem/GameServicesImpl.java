@@ -12,7 +12,7 @@ public class GameServicesImpl implements GameServices {
     private HashMap<AtomicLong, Game> gameDao = new HashMap<>();    // will store all games
 
     public void createGame() {
-        // this method will generate the secret number string
+        // this method will generate the random secret number string out of 10 digits
         // and set it in a new Game instance
         Game game = new Game();
         game.setGameId(this.gameId);
