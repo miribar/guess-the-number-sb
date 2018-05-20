@@ -4,8 +4,10 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public interface GameServices {
 
-    void createGame(AtomicLong gameId, Game game);
+    void createGame();
 
-    Game fetchGame(AtomicLong gameId);
+    void addGame(AtomicLong gameId, Game game);
+
+    Game fetchGame();
 
 }

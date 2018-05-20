@@ -1,11 +1,13 @@
 package com.oem;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Game {
 
-    private AtomicLong gameId;
-    private StringBuilder secretNum;
+    private AtomicLong gameId;          // generated in the service (singleton)
+    private StringBuilder secretNum;    // generated in the service (singleton)
     private int numOfMoves = 0;
     private int numDigitsInPlace = 0;
     private int numDigitsNotInPlace = 0;
