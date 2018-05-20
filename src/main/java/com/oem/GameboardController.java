@@ -42,8 +42,9 @@ public class GameboardController {
     public void createGame() {
         gameServices.createGame();
     }
-    @GetMapping("/fetchgame")
-    public Game fetchGame() {
-        return gameServices.fetchGame();
+
+    @GetMapping("/fetchgame/{id}")
+    public String fetchGame(@PathVariable("id") String gameId) {
+        return gameServices.fetchGame(gameId);
     }
 }

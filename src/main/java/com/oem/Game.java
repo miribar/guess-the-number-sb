@@ -6,17 +6,17 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class Game {
 
-    private AtomicLong gameId;          // generated in the service (singleton)
+    private Long gameId;          // generated in the service (singleton)
     private StringBuilder secretNum;    // generated in the service (singleton)
     private int numOfMoves = 0;
     private int numDigitsInPlace = 0;
     private int numDigitsNotInPlace = 0;
 
-    public AtomicLong getGameId() {
+    public Long getGameId() {
         return gameId;
     }
 
-    public void setGameId(AtomicLong gameId) {
+    public void setGameId(Long gameId) {
         this.gameId = gameId;
     }
 
@@ -50,5 +50,16 @@ public class Game {
 
     public void setNumDigitsNotInPlace(int numDigitsNotInPlace) {
         this.numDigitsNotInPlace = numDigitsNotInPlace;
+    }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "gameId=" + gameId +
+                ", secretNum=" + secretNum +
+                ", numOfMoves=" + numOfMoves +
+                ", numDigitsInPlace=" + numDigitsInPlace +
+                ", numDigitsNotInPlace=" + numDigitsNotInPlace +
+                '}';
     }
 }
