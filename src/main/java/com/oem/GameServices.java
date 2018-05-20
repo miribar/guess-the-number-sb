@@ -1,5 +1,13 @@
 package com.oem;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public interface GameServices {
-    Player createEntry(String name, int num_of_guesses);
+
+    void createGame();
+
+    void addGame(AtomicLong gameId, Game game);
+
+    Game fetchGame();
+
 }
