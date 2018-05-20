@@ -8,6 +8,6 @@ public interface GameServices {
 
     void addGame(AtomicLong gameId, Game game);
 
-    Game fetchGame();
+    String fetchGame(String gameId);
 
 }

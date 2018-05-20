@@ -6,8 +6,8 @@ const app = {           //this variable holds the events and has the base endpoi
 //==== Action functions   ====//
 
 function winner() {
-    var win = true;
-    var game_over = true;
+    var win;
+    var game_over;
 
     if (win && game_over) {
         show(element('get-player-details'));
@@ -79,7 +79,7 @@ function addPlayer() {
             showAll();
         }
     };
-    xhttp.open("POST", app.baseURL + "/add", true);
+    xhttp.open("POST", app.baseURL + "/addplayer", true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send(JSON.stringify(player));
 }
