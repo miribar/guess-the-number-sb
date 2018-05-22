@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game {
 
-//    private AtomicInteger gameId;         // generated in the service (singleton)
     private StringBuilder secretNum;        // generated in the service (singleton)
     private int numOfGuesses = 0;
     private int numDigitsInPlace = 0;
