@@ -12,7 +12,9 @@
     <div class="container-div">
 
         <div class="start-game">
-            <button id=start-button type="button" onclick="winner();"> Start a new game </button>
+            Please type in your name to start a new game:
+            <input id="player-name" type="text" placeholder="Player's name"><br>
+            <button id=start-button type="button" onclick="startNewGame();"> Start a new game </button>
         </div>
 
         <div class="check-guess">
@@ -31,12 +33,9 @@
             </table>
         </div>
 
-        <div id="get-player-details">
+        <div id="add-player">
             <br>
-            <!-- here, in case of win, we'll get player details  -->
-            <br>
-            <input id="player-name" type="text" placeholder="Player's name">
-            <input id="num-of-guesses" type="text" placeholder="Final num of guesses (<20)">
+            <!-- here, in case of win, we'll add player name & num of guesses to the DB -->
             <button id="add-player-btn" onclick="addPlayer();" class="add-player-btn"> Add player </button>
         </div>
 

@@ -1,24 +1,13 @@
 package com.oem;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Game {
 
-    private Long gameId;          // generated in the service (singleton)
-    private StringBuilder secretNum;    // generated in the service (singleton)
-    private int numOfMoves = 0;
+    private StringBuilder secretNum;        // generated in the service (singleton)
+    private int numOfGuesses = 0;
     private int numDigitsInPlace = 0;
     private int numDigitsNotInPlace = 0;
-
-    public Long getGameId() {
-        return gameId;
-    }
-
-    public void setGameId(Long gameId) {
-        this.gameId = gameId;
-    }
 
     public StringBuilder getSecretNum() {
         return secretNum;
@@ -28,12 +17,12 @@ public class Game {
         this.secretNum = secretNum;
     }
 
-    public int getNumOfMoves() {
-        return numOfMoves;
+    public int getNumOfGuesses() {
+        return numOfGuesses;
     }
 
-    public void setNumOfMoves(int numOfMoves) {
-        this.numOfMoves = numOfMoves;
+    public void setNumOfGuesses(int numOfGuesses) {
+        this.numOfGuesses = numOfGuesses;
     }
 
     public int getNumDigitsInPlace() {
@@ -52,14 +41,4 @@ public class Game {
         this.numDigitsNotInPlace = numDigitsNotInPlace;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "gameId=" + gameId +
-                ", secretNum=" + secretNum +
-                ", numOfMoves=" + numOfMoves +
-                ", numDigitsInPlace=" + numDigitsInPlace +
-                ", numDigitsNotInPlace=" + numDigitsNotInPlace +
-                '}';
-    }
 }

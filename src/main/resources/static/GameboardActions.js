@@ -5,15 +5,35 @@ const app = {           //this variable holds the events and has the base endpoi
 
 //==== Action functions   ====//
 
-function winner() {
-    var win;
-    var game_over;
+function startNewGame() {
+    var xhttp = new XMLHttpRequest();
 
-    if (win && game_over) {
-        show(element('get-player-details'));
-    }
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            alert(this.responseText);
+            //show(element('check-guess'));
+            alert("Now we show the guesses area")
+            //manageGuesses();
+        }
+    };
+    xhttp.open("POST", app.baseURL + "/creategame", true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send();
 }
-//-----------------------------//
+
+function manageGuesses() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            //show(element('check-guess'));
+            alert("Now we show the guesses area")
+            //manageGuesses();
+        }
+    };
+    xhttp.open("GET", app.baseURL + "/fetchgame/" , true);
+    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.send(JSON.stringify(game));
+}
 
 function createTable() {
     // if (app.players.length == 0) {
@@ -31,8 +51,8 @@ function createTable() {
         const player = app.players[i];
         tbl_str += "<tr>";
         tbl_str += "<td>" + player.playerId + "</td>";
-        tbl_str += "<td>" + player.player_name + "</td>";
-        tbl_str += "<td>" + player.num_of_guesses + "</td>";
+        tbl_str += "<td>" + player.playerName + "</td>";
+        tbl_str += "<td>" + player.numOfGuesses + "</td>";
         tbl_str += "</tr>";
     }
     tbl_str += "</table>";
@@ -60,10 +80,21 @@ function showAll() {
 
 //-----------------------------//
 
+function winner() {
+    var win;
+    var game_over;
+
+    if (win && game_over) {
+        show(element('get-player-details'));
+    }
+}
+
+//-----------------------------//
+
 function addPlayer() {
     const player = {
-        player_name : element("player-name").value,
-        num_of_guesses : element("num-of-guesses").value
+        playerName : element("player-name").value,
+        numOfGuesses : game.numOfGuesses
     };
     log(player);
     // if (event.description == null || event.description.length == 0
@@ -106,6 +137,7 @@ function hide(element) {
 }
 
 function show(element) {
+    alert(element);
     element.style.visibility = 'visible';
 }
 

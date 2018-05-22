@@ -1,13 +1,11 @@
 package com.oem;
 
-import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public interface GameServices {
 
-    void createGame();
+    AtomicInteger createGame();
 
-    void addGame(AtomicLong gameId, Game game);
-
-    String fetchGame(String gameId);
+    AtomicInteger addGame(AtomicInteger gameId, Game game);
 
 }
