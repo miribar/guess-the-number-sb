@@ -2,6 +2,8 @@ package com.oem;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController                             //For serving REST requests, all responses default format is JSON
@@ -34,17 +36,12 @@ public class GameboardController {
     //     Game API endpoints   //
 
     @PostMapping("/addgame")
-    public void addGame(AtomicLong gameId, Game game) {
-        gameServices.addGame(gameId, game);
+    public AtomicInteger addGame(AtomicInteger gameId, Game game) {
+        return gameServices.addGame(gameId, game);
     }
 
     @PostMapping("/creategame")
-    public void createGame() {
-        gameServices.createGame();
-    }
-
-    @GetMapping("/fetchgame/{id}")
-    public String fetchGame(@PathVariable("id") String gameId) {
-        return gameServices.fetchGame(gameId);
+    public AtomicInteger createGame() {
+        return gameServices.createGame();
     }
 }
