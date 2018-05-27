@@ -4,8 +4,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public interface GameServices {
 
-    AtomicInteger createGame();
+    Integer createGame();
 
-    AtomicInteger addGame(AtomicInteger gameId, Game game);
+    Integer addGame(Integer gameId, Game game);
+
+    Game checkTheGuess(Integer gameId, String number);
 
 }

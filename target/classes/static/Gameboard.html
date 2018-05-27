@@ -17,29 +17,27 @@
             <button id=start-button type="button" onclick="startNewGame();"> Start a new game </button>
         </div>
 
-        <div class="check-guess">
-            <button id=guess-button type="button" onclick="alert('checks the guess')"> Check </button>
-            <input id=guess-input type="text">
-        </div>
-
-        <div class="guesses-table">
-            <table>
+        <div class="guesses-area" id="guesses-area">
+            Enter your guess for a 4-digits number: <input type="text" id="guess" maxlength="4">
+            <button id=guess-button type="button" onclick=checkTheGuess();> Check </button>
+            <br>
+            <table class="guesses-table">
                 <tr>
                     <th> # </th>
                     <th> Guess </th>
                     <th> Result </th>
                 </tr>
-
             </table>
         </div>
 
         <div id="add-player">
             <br>
-            <!-- here, in case of win, we'll add player name & num of guesses to the DB -->
-            <button id="add-player-btn" onclick="addPlayer();" class="add-player-btn"> Add player </button>
+            <!-- here, in case of win, if new high score, we'll add player name & num of guesses to the DB -->
+            This is a new high score! <br>
+            <button id="add-player-btn" onclick="addPlayer();" class="add-player-btn"> Add your name </button>
         </div>
 
-        <div id="high-scores-table">
+        <div class="high-scores-table">
             <!-- here, in case of win, we'll present the top 10 high scores in a table -->
         </div>
 

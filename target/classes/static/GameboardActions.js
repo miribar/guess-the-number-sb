@@ -1,19 +1,20 @@
-const app = {           //this variable holds the events and has the base endpoint
+const app = {           //this variable holds the players array and has the base endpoint
     players : [],
     baseURL : 'rest/api'
 };
 
+var gameId;
+
 //==== Action functions   ====//
 
+//Starts a new game and captures its gameId, shows guesses table
 function startNewGame() {
     var xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            alert(this.responseText);
-            //show(element('check-guess'));
-            alert("Now we show the guesses area")
-            //manageGuesses();
+            gameId = this.responseText;             //gameId variable receives the new gameId from the POST request
+            show(element("guesses-area"));
         }
     };
     xhttp.open("POST", app.baseURL + "/creategame", true);
@@ -21,18 +22,17 @@ function startNewGame() {
     xhttp.send();
 }
 
-function manageGuesses() {
+//Checks each guess on the server with the gameId
+function checkTheGuess() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            //show(element('check-guess'));
-            alert("Now we show the guesses area")
-            //manageGuesses();
+           alert("Current game has: " + JSON.stringify(this.responseText));
         }
     };
-    xhttp.open("GET", app.baseURL + "/fetchgame/" , true);
+    xhttp.open("GET", app.baseURL + "/check-the-guess/" + gameId + "/" + element("guess").value, true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(game));
+    xhttp.send();
 }
 
 function createTable() {

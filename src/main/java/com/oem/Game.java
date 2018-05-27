@@ -8,6 +8,7 @@ public class Game {
     private int numOfGuesses = 0;
     private int numDigitsInPlace = 0;
     private int numDigitsNotInPlace = 0;
+    private boolean win = false;
 
     public StringBuilder getSecretNum() {
         return secretNum;
@@ -41,4 +42,12 @@ public class Game {
         this.numDigitsNotInPlace = numDigitsNotInPlace;
     }
 
+    public boolean isWin() {
+        return win;
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
+    }
+  
 }
