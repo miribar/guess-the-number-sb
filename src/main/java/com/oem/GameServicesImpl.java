@@ -26,10 +26,6 @@ public class GameServicesImpl implements GameServices {
         //gameDao.forEach((key, value) -> System.out.println(key + ":" + value.getSecretNum()));
     }
 
-    private Integer setNewGameId() {
-        return this.atomicInteger.getAndIncrement();
-    }
-
     @Override
     public Integer addGame(Integer gameId, Game newGame) {
         gameDao.put(gameId, newGame);
@@ -44,6 +40,9 @@ public class GameServicesImpl implements GameServices {
         return currentGame;
     }
 
+    private Integer setNewGameId() {
+        return this.atomicInteger.getAndIncrement();
+    }
 }
 
 // TODO: Use GeneralResponse to wrap everything with exceptions handling
