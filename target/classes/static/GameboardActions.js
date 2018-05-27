@@ -137,6 +137,7 @@ function hide(element) {
 }
 
 function show(element) {
+    alert(element);
     element.style.visibility = 'visible';
 }
 

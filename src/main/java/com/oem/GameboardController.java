@@ -44,7 +44,6 @@ public class GameboardController {
         return gameServices.createGame();
     }
 
-    //@GetMapping("/check-the-guess")
     @GetMapping("/check-the-guess/{id}/{guess}")
     public Game checkTheGuess(@PathVariable("id") Integer gameId, @PathVariable("guess") String number) {
         return gameServices.checkTheGuess(gameId, number);

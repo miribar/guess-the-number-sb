@@ -49,4 +49,5 @@ public class Game {
     public void setWin(boolean win) {
         this.win = win;
     }
+  
 }

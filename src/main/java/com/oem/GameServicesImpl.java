@@ -8,10 +8,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class GameServicesImpl implements GameServices {
 
-    private AtomicInteger atomicInteger = new AtomicInteger();                     // generates a sequential gameId starting with '0'
+    private AtomicInteger atomicInteger = new AtomicInteger();               // generates a sequential gameId starting with '0'
     private Integer gameId = 0;
-    private StringBuilder secretNum = new StringBuilder("1234567890");      // initializes the StringBuilder var with 10 digits
-    private HashMap<Integer, Game> gameDao = new HashMap<Integer, Game>();    // will store all games
+    private StringBuilder secretNum = new StringBuilder("1234567890");       // initializes the StringBuilder var with 10 digits
+    private HashMap<Integer, Game> gameDao = new HashMap<Integer, Game>();   // will store all games
 
     public Integer createGame() {
         // this method will generate the random secret number string out of 10 digits
@@ -43,6 +43,7 @@ public class GameServicesImpl implements GameServices {
     private Integer setNewGameId() {
         return this.atomicInteger.getAndIncrement();
     }
+  
 }
 
 // TODO: Use GeneralResponse to wrap everything with exceptions handling
