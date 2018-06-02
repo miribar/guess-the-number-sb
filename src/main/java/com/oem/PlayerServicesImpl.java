@@ -15,8 +15,13 @@ public class PlayerServicesImpl implements PlayerServices {
     }
 
     @Override
-    public Iterable<Player> getTopTen() {
+    public Iterable<Player> findAll() {
         return playerDao.findAll();
+    }
+
+    @Override
+    public Player getWorstGuess() {
+            return playerDao.findTop1ByOrderByGuessesDesc();
     }
 
     @Override

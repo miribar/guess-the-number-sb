@@ -1,20 +1,16 @@
 package com.oem;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Game {
 
-    private StringBuilder secretNum;        // generated in the service (singleton)
+    private String secretNum;        // generated in the service (singleton)
     private int numOfGuesses = 0;
-    private int numDigitsInPlace = 0;
-    private int numDigitsNotInPlace = 0;
-    private boolean win = false;
+    private boolean gameWon = false;
 
-    public StringBuilder getSecretNum() {
+    public String getSecretNum() {
         return secretNum;
     }
 
-    public void setSecretNum(StringBuilder secretNum) {
+    public void setSecretNum(String secretNum) {
         this.secretNum = secretNum;
     }
 
@@ -22,32 +18,16 @@ public class Game {
         return numOfGuesses;
     }
 
-    public void setNumOfGuesses(int numOfGuesses) {
-        this.numOfGuesses = numOfGuesses;
+    public void setNumOfGuesses() {
+        this.numOfGuesses++;
     }
 
-    public int getNumDigitsInPlace() {
-        return numDigitsInPlace;
+    public boolean isGameWon() {
+        return gameWon;
     }
 
-    public void setNumDigitsInPlace(int numDigitsInPlace) {
-        this.numDigitsInPlace = numDigitsInPlace;
-    }
-
-    public int getNumDigitsNotInPlace() {
-        return numDigitsNotInPlace;
-    }
-
-    public void setNumDigitsNotInPlace(int numDigitsNotInPlace) {
-        this.numDigitsNotInPlace = numDigitsNotInPlace;
-    }
-
-    public boolean isWin() {
-        return win;
-    }
-
-    public void setWin(boolean win) {
-        this.win = win;
+    public void setGameWon(boolean gameWon) {
+        this.gameWon = gameWon;
     }
   
 }

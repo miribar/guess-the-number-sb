@@ -4,7 +4,10 @@ public interface PlayerServices {
 
     Long createPlayer(Player player);
 
-    Iterable<Player> getTopTen();
+    Iterable<Player> findAll();
+
+    Player getWorstGuess();
 
     void deletePlayer(Long player_id);
+
 }

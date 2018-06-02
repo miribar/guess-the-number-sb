@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PlayerRepository extends CrudRepository <Player, Long> {
                                                         //<T: type, Serializable: id field of the type>
+    Player findTop1ByOrderByGuessesDesc();
 
 }

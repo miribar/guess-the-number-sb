@@ -3,27 +3,24 @@ package com.oem;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 public class GameServicesImpl implements GameServices {
 
-    private AtomicInteger atomicInteger = new AtomicInteger();               // generates a sequential gameId starting with '0'
-    private Integer gameId = 0;
-    private StringBuilder secretNum = new StringBuilder("1234567890");       // initializes the StringBuilder var with 10 digits
-    private HashMap<Integer, Game> gameDao = new HashMap<Integer, Game>();   // will store all games
+    private AtomicInteger atomicInteger = new AtomicInteger();      // generates a sequential gameId starting with '0'
+    private HashMap<Integer, Game> gameDao = new HashMap<>();       // hashmap that stores all the games
 
     public Integer createGame() {
-        // this method will generate the random secret number string out of 10 digits
-        // and set it in a new Game instance
-
         Game newGame = new Game();
-        gameId = setNewGameId();
-        newGame.setSecretNum(secretNum);
-        return addGame(gameId, newGame);
-
+        StringBuilder secretNum = new StringBuilder();
+        newGame.setSecretNum(generateSecretNum(secretNum));
+        Integer gameId = setNewGameId();
         //for hashmap debug:
+        //System.out.println("hashmap has:");
         //gameDao.forEach((key, value) -> System.out.println(key + ":" + value.getSecretNum()));
+        return addGame(gameId, newGame);
     }
 
     @Override
@@ -33,17 +30,45 @@ public class GameServicesImpl implements GameServices {
     }
 
     @Override
-    public Game checkTheGuess(Integer gameId, String number) {
-        //create an object out of fetched DB data and return it to the UI
-        Game currentGame = gameDao.get(gameId);
-        currentGame.setSecretNum(null);
+    public Guess checkTheGuess(Integer gameId, String guess) {
+        //create an object only for the guesses data and return it to the UI
+        Guess currentGame = new Guess();
+
+        for (int i=0; i<guess.length(); i++) {
+            // Check digits in place
+            if (guess.charAt(i) == gameDao.get(gameId).getSecretNum().charAt(i)) {
+                currentGame.setNumDigitsInPlace();
+            }
+            else
+            // Check digits not in place
+            if (guess.indexOf(gameDao.get(gameId).getSecretNum().charAt(i)) != -1) {
+                currentGame.setNumDigitsNotInPlace();
+            }
+        }
+        // In case all digits are in place, we have a winner
+        if (currentGame.getNumDigitsInPlace() == 4) {
+            gameDao.get(gameId).setGameWon(true);
+        }
+
+        // Increase number of guesses in current game
+        gameDao.get(gameId).setNumOfGuesses();
         return currentGame;
     }
 
     private Integer setNewGameId() {
         return this.atomicInteger.getAndIncrement();
     }
+
+    private String generateSecretNum(StringBuilder secretNum) {
+        String NUMBERS = "1234567890";
+        Random rnd = new Random();
+        while (secretNum.length() < 4) {                                // length of the random string
+            int index = (int)(rnd.nextFloat() * NUMBERS.length());
+            char nextDigit = NUMBERS.charAt(index);                     // select char at random index in NUMBERS
+            if (secretNum.indexOf(String.valueOf(nextDigit)) == -1)     // if digit not used yet
+                secretNum.append(nextDigit);
+        }
+        return secretNum.toString();
+    }
   
 }
-
-// TODO: Use GeneralResponse to wrap everything with exceptions handling

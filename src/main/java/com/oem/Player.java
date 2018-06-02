@@ -13,7 +13,7 @@ public class Player {
     @GeneratedValue
     private Long player_id;
     private String player_name;
-    private int num_of_guesses;
+    private int guesses;
 
     Long getPlayer_id() {
         return player_id;
@@ -31,12 +31,12 @@ public class Player {
         this.player_name = player_name;
     }
 
-    public int getNum_of_guesses() {
-        return num_of_guesses;
+    public int getGuesses() {
+        return guesses;
     }
 
-    public void setNum_of_guesses(int num_of_guesses) {
-        this.num_of_guesses = num_of_guesses;
+    public void setGuesses(int guesses) {
+        this.guesses = guesses;
     }
 
 }
