@@ -1,5 +1,6 @@
 const app = {           //this variable holds the players array and has the base endpoint
     players : [],
+    guesses : [],
     baseURL : 'rest/api'
 };
 
@@ -14,6 +15,7 @@ function startNewGame() {
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             gameId = this.responseText;             //gameId variable receives the new gameId from the POST request
+            addPlayer();
             show(element("guesses-area"));
         }
     };
@@ -22,59 +24,44 @@ function startNewGame() {
     xhttp.send();
 }
 
-//Checks each guess on the server with the gameId
-function checkTheGuess() {
+//-----------------------------//
+
+function addPlayer() {
+    const player = {
+        playerName : element("player-name").value,
+    };
+    log(player);
+    if (player.playerName == null || player.playerName.length == 0) {
+        alert("Please fill in player's name");
+        return;
+    }
+
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-           alert("Current game has: " + this.responseText);
+            app.players = JSON.parse(this.responseText);
+            log("All players: " + this.responseText);
         }
     };
-    xhttp.open("GET", app.baseURL + "/check-the-guess/" + gameId + "/" + element("guess").value, true);
-    xhttp.setRequestHeader("Content-type", "application/json");
+    xhttp.open("POST", app.baseURL + "/addplayer", true);
     xhttp.send();
-}
-
-function createTable() {
-    // if (app.players.length == 0) {
-    //     element("high-scores-table").innerHTML = "<h1> No players found !! </h1>";
-    //     return;
-    // }
-    alert ("in create table");
-    var tbl_str = "<table>";
-    tbl_str += "<tr>";
-    tbl_str += "<th> # </th>";
-    tbl_str += "<th> Name  </th>";
-    tbl_str += "<th> Number of guesses </th>";
-    tbl_str += "</tr>";
-    for (var i = 0; i < app.players.length; i++) {
-        const player = app.players[i];
-        tbl_str += "<tr>";
-        tbl_str += "<td>" + player.playerId + "</td>";
-        tbl_str += "<td>" + player.playerName + "</td>";
-        tbl_str += "<td>" + player.numOfGuesses + "</td>";
-        tbl_str += "</tr>";
-    }
-    tbl_str += "</table>";
-    element("high-scores-table").innerHTML = tbl_str;
-    show(element('high-scores-table'));
 }
 
 //-----------------------------//
 
-function showAll() {
-    // hide(element('high-scores-table'));
-    alert("in show all");
+//Checks each guess on the server with the gameId, increases num of guesses
+function checkTheGuess() {
     var xhttp = new XMLHttpRequest();
+
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            log("All players: " + this.responseText);
-            app.players = JSON.parse(this.responseText);
-            createTable();
+           app.guesses = JSON.parse(this.responseText);
+           log("All guesses: " + this.responseText);
+
         }
     };
-    //This builds the GET request. We create AJAX requests with REST endpoint(communication protocol against the server)
-    xhttp.open("GET", app.baseURL + "/getscores", true);
+    xhttp.open("GET", app.baseURL + "/check-the-guess/" + gameId + "/" + element("guess").value, true);
+    xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
 }
 
@@ -91,28 +78,39 @@ function winner() {
 
 //-----------------------------//
 
-function addPlayer() {
-    const player = {
-        playerName : element("player-name").value,
-        numOfGuesses : game.numOfGuesses
-    };
-    log(player);
-    // if (event.description == null || event.description.length == 0
-    //     || event.startDate == null || event.startDate.length == 0) {
-    //     alert("Please fill all the fields");
-    //     show(element('addEventBtn'));
-    //     return;
-    // }
+function createHighScoresTable() {
+    var tbl_str = "<table>";
+    tbl_str += "<tr>";
+    tbl_str += "<th> # </th>";
+    tbl_str += "<th> Name  </th>";
+    tbl_str += "<th> Number of guesses </th>";
+    tbl_str += "</tr>";
+    for (var i = 0; i < app.players.length; i++) {
+        const player = app.players[i];
+        tbl_str += "<tr>";
+        tbl_str += "<td>" + player.playerId + "</td>";
+        tbl_str += "<td>" + player.playerName + "</td>";
+        tbl_str += "<td>" + player.playerGuesses + "</td>";
+        tbl_str += "</tr>";
+    }
+    tbl_str += "</table>";
+    element("high-scores-table").innerHTML = tbl_str;
+    show(element('high-scores-table'));
+}
 
+//-----------------------------//
+
+function showAll() {
+    // hide(element('high-scores-table'));
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            showAll();
+            createHighScoresTable();
         }
     };
-    xhttp.open("POST", app.baseURL + "/addplayer", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(player));
+    //This builds the GET request. We create AJAX requests with REST endpoint(communication protocol against the server)
+    xhttp.open("GET", app.baseURL + "/getscores", true);
+    xhttp.send();
 }
 
 //-----------------------------//
@@ -137,7 +135,6 @@ function hide(element) {
 }
 
 function show(element) {
-    alert(element);
     element.style.visibility = 'visible';
 }
 
@@ -148,3 +145,6 @@ function element(elementId) {
 function log(item) {
     console.log(item);
 }
+
+// TODO: Write win & lose scenarios
+// TODO: Use GeneralResponse to wrap everything with exceptions handling

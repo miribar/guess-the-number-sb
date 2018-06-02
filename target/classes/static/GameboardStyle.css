@@ -1,4 +1,4 @@
-/*      HTML tags       */
+/*----      HTML tags   ----*/
 
 body {
     box-sizing: border-box;
@@ -18,7 +18,8 @@ button {
     font-size: large;
 }
 
-/*      HTML Id's       */
+/*----      HTML Id's    ----*/
+
 #start-button {
     width: 200px;
 }
@@ -31,7 +32,8 @@ button {
     width: 110px;
 }
 
-/*      Classes         */
+/*----      Classes      ---*/
+
 .container-div {
     display: flex;
     flex-direction: column;
