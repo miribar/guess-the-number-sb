@@ -4,7 +4,7 @@ public class Game {
 
     private String secretNum;        // generated in the service (singleton)
     private int numOfGuesses = 0;
-    private boolean gameWon = false;
+//    private boolean gameWon = false;
 
     public String getSecretNum() {
         return secretNum;
@@ -22,12 +22,12 @@ public class Game {
         this.numOfGuesses++;
     }
 
-    public boolean isGameWon() {
-        return gameWon;
-    }
-
-    public void setGameWon(boolean gameWon) {
-        this.gameWon = gameWon;
-    }
+//    public boolean getGameWon() {
+//        return gameWon;
+//    }
+//
+//    public void setGameWon(boolean gameWon) {
+//        this.gameWon = gameWon;
+//    }
   
 }

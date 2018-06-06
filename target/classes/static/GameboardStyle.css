@@ -37,15 +37,22 @@ button {
 .container-div {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
     height: 500px;
-    margin: 10px;
     text-align: center;
-    line-height: 60px;
     visibility: hidden;
 }
 
 .container-div > .start-game {
     visibility: visible;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.container-div > .guesses-area {
+    margin-bottom: 30px;
+}
+
+.container-div > .high-scores-table {
+    margin-bottom: 30px;
 }
 

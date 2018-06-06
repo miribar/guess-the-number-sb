@@ -13,14 +13,14 @@
 
         <div class="start-game">
             Please type in your name to start a new game:
-            <input id="player-name" type="text" placeholder="Player's name"><br>
+            <input id="player-name" type="text" placeholder="Player's name"><br><br>
             <button id=start-button type="button" onclick="startNewGame();"> Start a new game </button>
         </div>
 
         <div class="guesses-area" id="guesses-area">
-            Enter your guess for a 4-digits number: <input type="text" id="guess" maxlength="4">
-            <button id=guess-button type="button" onclick=checkTheGuess();> Check </button>
-            <br>
+            Enter your guess for a 4-digits number: <input type="text" id="guess" maxlength="4" onfocus="this.value=''">
+            <button id=guess-button type="button" onclick=checkTheGuess(this.rowIndex);> Check </button>
+            <br><br>
             <table id="guesses-table">
                 <tr>
                     <th> # </th>
@@ -28,13 +28,6 @@
                     <th> Result </th>
                 </tr>
             </table>
-        </div>
-
-        <div id="add-player">
-            <br>
-            <!-- here, in case of win, if new high score, we'll add player name & num of guesses to the DB -->
-            This is a new high score! <br>
-            <button id="add-player-btn" onclick="addPlayer();" class="add-player-btn"> Add your name </button>
         </div>
 
         <div class="high-scores-table">
