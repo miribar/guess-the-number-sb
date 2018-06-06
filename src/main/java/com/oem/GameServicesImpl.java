@@ -17,9 +17,6 @@ public class GameServicesImpl implements GameServices {
         StringBuilder secretNum = new StringBuilder();
         newGame.setSecretNum(generateSecretNum(secretNum));
         Integer gameId = setNewGameId();
-        //for hashmap debug:
-        //System.out.println("hashmap has:");
-        //gameDao.forEach((key, value) -> System.out.println(key + ":" + value.getSecretNum()));
         return addGame(gameId, newGame);
     }
 
@@ -46,12 +43,18 @@ public class GameServicesImpl implements GameServices {
             }
         }
         // In case all digits are in place, we have a winner
-        if (currentGame.getNumDigitsInPlace() == 4) {
-            gameDao.get(gameId).setGameWon(true);
-        }
+        //if (currentGame.getNumDigitsInPlace() == 4) {
+        //    gameDao.get(gameId).setGameWon(true);
+        //}
 
-        // Increase number of guesses in current game
+        // In any case, increase number of guesses in current game
         gameDao.get(gameId).setNumOfGuesses();
+
+        //For hashmap debug:
+        gameDao.forEach((key, value) ->
+                System.out.println(String.format("gameId: %s secret num: %s guesses: %s",
+                        key, value.getSecretNum(), value.getNumOfGuesses())));
+
         return currentGame;
     }
 
