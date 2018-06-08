@@ -7,50 +7,35 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/rest/api/")  		            //this creates the services main API endpoint
 public class GameboardController {
 
-    @Autowired                                //this injects the playerServices into the controller, wires them together
+    @Autowired                                //this injects the PlayerServices into the controller, wires them together
     private PlayerServices playerServices;
 
     @Autowired
-    private GameServices gameServices;
+    private GameServices gameServices;        //this injects the GameServices into the controller, wires them together
 
-    //     Player API endpoints (against DB)  //
+    //     Player API endpoints (actions against DB)  //
 
     @GetMapping("/getscores")
     public Iterable<Player> findAll() {
         return playerServices.findAll();
     }
 
-    @PostMapping("/addplayer")
-    public Long addPlayer(@RequestBody Player player) {     //@RequestBody is a JSON and we get the params from outside
-        return playerServices.createPlayer(player);
+    @DeleteMapping("/deletescores")
+    public void deleteAll() {
+        playerServices.deleteAll();
     }
 
-    @GetMapping("/getworstguess")
-    public Player getWorstGuess() {
-        return playerServices.getWorstGuess();
-    }
-
-    // Will use the Player returned from getWorstGuess() to delete that player from DB
-    @DeleteMapping("/deleteplayer/{id}")
-    public void deletePlayer(@PathVariable("id") Long playerId) {       //@PathVariable uses the var 'id' from request
-        playerServices.deletePlayer(playerId);
-    }
-
-    //     Game API endpoints (against hashmap)  //
-
-    @PostMapping("/addgame")
-    public Integer addGame(Integer gameId, Game game) {
-        return gameServices.addGame(gameId, game);
-    }
+    //     Game API endpoints (actions against hashmap)  //
 
     @PostMapping("/creategame")
     public Integer createGame() {
         return gameServices.createGame();
     }
 
-    @GetMapping("/check-the-guess/{id}/{guess}")
-    public Guess checkTheGuess(@PathVariable("id") Integer gameId, @PathVariable("guess") String guess) {
-        return gameServices.checkTheGuess(gameId, guess);
+    @GetMapping("/check-the-guess/{name}/{id}/{guess}")
+    public Guess checkTheGuess(@PathVariable("name") String playerName, @PathVariable("id") Integer gameId,
+                               @PathVariable("guess") String guess) {
+        return gameServices.checkTheGuess(playerName, gameId, guess);
     }
 
 }

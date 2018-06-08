@@ -6,6 +6,6 @@ public interface GameServices {
 
     Integer addGame(Integer gameId, Game game);
 
-    Guess checkTheGuess(Integer gameId, String guess);
+    Guess checkTheGuess(String playerName, Integer gameId, String guess);
 
 }
