@@ -10,6 +10,11 @@ public class PlayerServicesImpl implements PlayerServices {
     private PlayerRepository playerDao;
 
     @Override
+    public long countPlayers() {
+        return playerDao.count();
+    }
+
+    @Override
     public Long createPlayer(Player player) {
         return playerDao.save(player).getPlayer_id();
     }
@@ -20,13 +25,18 @@ public class PlayerServicesImpl implements PlayerServices {
     }
 
     @Override
-    public Player getWorstGuess() {
+    public Player getWorstPlayer() {
             return playerDao.findTop1ByOrderByGuessesDesc();
     }
 
     @Override
     public void deletePlayer(Long player_id) {
          playerDao.delete(player_id);
+    }
+
+    @Override
+    public void deleteAll() {
+        playerDao.deleteAll();
     }
 
 }

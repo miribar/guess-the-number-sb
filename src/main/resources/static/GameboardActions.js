@@ -11,22 +11,6 @@ var gameId;
 //Starts a new game and captures its gameId, shows guesses table
 function startNewGame() {
     var xhttp = new XMLHttpRequest();
-
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            gameId = this.responseText;             //gameId variable receives the new gameId from the POST request
-            addPlayer();
-        }
-    };
-    xhttp.open("POST", app.baseURL + "/creategame", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send();
-}
-
-//-----------------------------//
-
-function addPlayer() {
-    var xhttp = new XMLHttpRequest();
     const player = {
         player_name : element("player-name").value,
         guesses : 0
@@ -39,13 +23,14 @@ function addPlayer() {
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            app.players = JSON.parse(this.responseText);
+            gameId = this.responseText;             //gameId variable receives the new gameId from the POST request
+            app.players = JSON.stringify(player);
             show(element("guesses-area"));
         }
     };
-    xhttp.open("POST", app.baseURL + "/addplayer", true);
+    xhttp.open("POST", app.baseURL + "/creategame", true);
     xhttp.setRequestHeader("Content-type", "application/json");
-    xhttp.send(JSON.stringify(player));
+    xhttp.send();
 }
 
 //-----------------------------//
@@ -53,7 +38,7 @@ function addPlayer() {
 //Checks each guess on the server with the gameId, increases num of guesses in game hashmap
 function checkTheGuess() {
     var xhttp = new XMLHttpRequest();
-    var input = element("guess").value;
+    var guessInput = element("guess").value;
 
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
@@ -64,11 +49,15 @@ function checkTheGuess() {
         }
     };
     // Only if input is valid, check the guess on server-side
-    if (isNaN(input) || (input === "") || (input === null) || (input.length !== 4) || (input < 0)) {
+    if (isNaN(guessInput) || (guessInput === "") || (guessInput === null) || (guessInput.length !== 4) ||
+        (guessInput < 0)) {
         alert("Please enter a positive 4-digit number");
         return;
     }
-    xhttp.open("GET", app.baseURL + "/check-the-guess/" + gameId + "/" + input, true);
+    xhttp.open("GET", app.baseURL + "/check-the-guess/"
+        + element("player-name").value + "/"
+        + gameId + "/"
+        + guessInput, true);
     xhttp.setRequestHeader("Content-type", "application/json");
     xhttp.send();
 }
@@ -93,19 +82,24 @@ function checkIfGameWon() {
     var numOfGuesses = element("guesses-table").getElementsByTagName("tbody")[0].getElementsByTagName("tr").length - 1;
 
     // Game not over & won
-    if (numOfGuesses < 2) {
+    if (numOfGuesses < 20) {
         if (app.guesses.numDigitsInPlace === 4) {
-            alert ("Game won, now we save player to DB & show high-scores-table");
+            alert ("You are a new winner!");
+            showHighScores();
+
         }
     }
     // Win on the 20th guess
     else {
         if (app.guesses.numDigitsInPlace === 4) {
-            alert ("Game won, now we save player to DB & show high-scores-table");
+            alert ("You are a new winner!");
+            showHighScores();
         }
         // No win
-        else
+        else {
             alert ("Game over! Try again?");
+            // Now we need to reset the board to initial state (hide all divs apart from start-game)
+        }
     }
 }
 
@@ -118,45 +112,44 @@ function createHighScoresTable() {
     tbl_str += "<th> Name  </th>";
     tbl_str += "<th> Number of guesses </th>";
     tbl_str += "</tr>";
+    var index = 0;
     for (var i = 0; i < app.players.length; i++) {
         const player = app.players[i];
+        index++;
         tbl_str += "<tr>";
-        tbl_str += "<td>" + player.playerId + "</td>";
+        tbl_str += "<td>" + index + "</td>";
         tbl_str += "<td>" + player.player_name + "</td>";
-        tbl_str += "<td>" + player.guesses + "</td>";
+        tbl_str += "<td>" + player.numOfGuesses + "</td>";
         tbl_str += "</tr>";
     }
     tbl_str += "</table>";
-    element("high-scores-table").innerHTML = tbl_str;
+    element("high-scores-table").innerHTML = "<h1> High Scores</h1><br>" + tbl_str;
     show(element('high-scores-table'));
+    show(element('clear-scores-button'));
 }
 
 //-----------------------------//
 
-function showAll() {
+function showHighScores() {
     // hide(element('high-scores-table'));
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+            log("All players: " + this.responseText);
+            app.players = JSON.parse(this.responseText);
             createHighScoresTable();
         }
     };
-    //This builds the GET request. We create AJAX requests with REST endpoint(communication protocol against the server)
+    // This builds the GET request.
+    // We create AJAX requests with REST endpoint(communication protocol against the server)
     xhttp.open("GET", app.baseURL + "/getscores", true);
     xhttp.send();
 }
 
 //-----------------------------//
 
-function deletePlayer (playerId) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-            log("deleted player: " + this.responseText);
-        }
-    };
-    xhttp.open("DELETE", app.baseURL + "/delete/" + playerId, true);
-    xhttp.send();
+function clearHighScoresTable() {
+    alert ("This will call the /deletescores endpoint to clear DB entries");
 }
 
 

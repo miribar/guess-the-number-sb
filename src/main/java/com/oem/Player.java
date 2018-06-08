@@ -15,6 +15,15 @@ public class Player {
     private String player_name;
     private int guesses;
 
+    public Player() {
+
+    }
+
+    public Player(String player_name, int guesses) {
+        this.player_name = player_name;
+        this.guesses = guesses;
+    }
+
     Long getPlayer_id() {
         return player_id;
     }
@@ -31,11 +40,11 @@ public class Player {
         this.player_name = player_name;
     }
 
-    public int getGuesses() {
+    public int getNumOfGuesses() {
         return guesses;
     }
 
-    public void setGuesses(int guesses) {
+    public void setNumOfGuesses(int guesses) {
         this.guesses = guesses;
     }
 

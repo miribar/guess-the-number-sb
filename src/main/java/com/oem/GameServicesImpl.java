@@ -1,5 +1,6 @@
 package com.oem;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -9,8 +10,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 @Service
 public class GameServicesImpl implements GameServices {
 
+    @Autowired
+    private PlayerServices playerServices;                          // because we need to use player services here
+
     private AtomicInteger atomicInteger = new AtomicInteger();      // generates a sequential gameId starting with '0'
-    private HashMap<Integer, Game> gameDao = new HashMap<>();       // hashmap that stores all the games
+    private HashMap<Integer, Game> gameDao = new HashMap<>();       // hashmap that will store all the games
 
     public Integer createGame() {
         Game newGame = new Game();
@@ -27,36 +31,48 @@ public class GameServicesImpl implements GameServices {
     }
 
     @Override
-    public Guess checkTheGuess(Integer gameId, String guess) {
+    public Guess checkTheGuess(String playerName, Integer gameId, String guess) {
         //create an object only for the guesses data and return it to the UI
-        Guess currentGame = new Guess();
+        Guess currentGuess = new Guess();
 
         for (int i=0; i<guess.length(); i++) {
             // Check digits in place
             if (guess.charAt(i) == gameDao.get(gameId).getSecretNum().charAt(i)) {
-                currentGame.setNumDigitsInPlace();
+                currentGuess.setNumDigitsInPlace();
             }
             else
             // Check digits not in place
             if (guess.indexOf(gameDao.get(gameId).getSecretNum().charAt(i)) != -1) {
-                currentGame.setNumDigitsNotInPlace();
+                currentGuess.setNumDigitsNotInPlace();
             }
         }
-        // In case all digits are in place, we have a winner
-        //if (currentGame.getNumDigitsInPlace() == 4) {
-        //    gameDao.get(gameId).setGameWon(true);
-        //}
 
-        // In any case, increase number of guesses in current game
+        // In any case, increase number of guesses in current game hashmap entry
         gameDao.get(gameId).setNumOfGuesses();
 
+        // In case all digits are in place, we have a winner
+        if (currentGuess.getNumDigitsInPlace() == 4) {
+            // If DB table is full - get worst player
+            // And if worst than current player (or same as), delete it
+            if (playerServices.countPlayers() == 10) {
+                Player worstPlayer = playerServices.getWorstPlayer();
+                if (worstPlayer.getNumOfGuesses() >= gameDao.get(gameId).getNumOfGuesses()) {
+                    playerServices.deletePlayer(worstPlayer.getPlayer_id());
+                }
+            }
+            //Add current winner to the DB
+            Player winner = new Player(playerName, gameDao.get(gameId).getNumOfGuesses());
+            long playerId = playerServices.createPlayer(winner);
+            System.out.println("Player #" + playerId + " was added to the DB");
+        }
         //For hashmap debug:
-        gameDao.forEach((key, value) ->
-                System.out.println(String.format("gameId: %s secret num: %s guesses: %s",
+        gameDao.forEach((key, value) -> System.out.println(String.format("gameId: %s secret num: %s guesses: %s",
                         key, value.getSecretNum(), value.getNumOfGuesses())));
 
-        return currentGame;
+        return currentGuess;
     }
+
+    //     Implementation methods  //
 
     private Integer setNewGameId() {
         return this.atomicInteger.getAndIncrement();

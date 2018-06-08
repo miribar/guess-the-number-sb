@@ -13,7 +13,7 @@
 
         <div class="start-game">
             Please type in your name to start a new game:
-            <input id="player-name" type="text" placeholder="Player's name"><br><br>
+            <input id="player-name" type="text" placeholder="Player's name" maxlength="15"><br><br>
             <button id=start-button type="button" onclick="startNewGame();"> Start a new game </button>
         </div>
 
@@ -30,8 +30,11 @@
             </table>
         </div>
 
-        <div class="high-scores-table">
+        <div class="high-scores-table" id="high-scores-table">
             <!-- here, in case of win, we'll present the top 10 high scores in a table -->
+        </div>
+        <div class="clear-scores-button" id="clear-scores-button">
+            <button id=clear-button type="button" onclick=clearHighScoresTable();> Clear </button>
         </div>
 
     </div>
