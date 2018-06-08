@@ -13,6 +13,8 @@ public class GameboardController {
     @Autowired
     private GameServices gameServices;        //this injects the GameServices into the controller, wires them together
 
+    String adminPass = "JavaRulez!";          //this is the admin password for table clear
+
     //     Player API endpoints (actions against DB)  //
 
     @GetMapping("/getscores")
@@ -20,9 +22,12 @@ public class GameboardController {
         return playerServices.findAll();
     }
 
-    @DeleteMapping("/deletescores")
-    public void deleteAll() {
-        playerServices.deleteAll();
+    @DeleteMapping("/deletescores/{password}")
+    public String deleteAll(@PathVariable("password") String adminPass) {
+        if (!adminPass.equals(this.adminPass)) {
+            return "You are not authorized to clear the table!";
+        }
+        return playerServices.deleteAll(adminPass);
     }
 
     //     Game API endpoints (actions against hashmap)  //

@@ -140,7 +140,8 @@ function showHighScores() {
             createHighScoresTable();
         }
     };
-    //This builds the GET request. We create AJAX requests with REST endpoint(communication protocol against the server)
+    // This builds the GET request.
+    // We create AJAX requests with REST endpoint(communication protocol against the server)
     xhttp.open("GET", app.baseURL + "/getscores", true);
     xhttp.send();
 }
@@ -170,5 +171,5 @@ function log(item) {
     console.log(item);
 }
 
-// TODO: Write win & lose scenarios
 // TODO: Use GeneralResponse to wrap everything with exceptions handling
+// TODO: Implement admin-permissioned clear table option
