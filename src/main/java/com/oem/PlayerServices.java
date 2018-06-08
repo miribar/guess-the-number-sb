@@ -11,5 +11,5 @@ public interface PlayerServices {
 
     void deletePlayer(Long player_id);
 
-    void deleteAll();
+    String deleteAll(String adminPass);
 }

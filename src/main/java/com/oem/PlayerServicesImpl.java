@@ -35,8 +35,9 @@ public class PlayerServicesImpl implements PlayerServices {
     }
 
     @Override
-    public void deleteAll() {
+    public String deleteAll(String adminPass) {
         playerDao.deleteAll();
+        return "High scores table entries deleted!";
     }
 
 }

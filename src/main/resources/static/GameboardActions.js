@@ -171,5 +171,5 @@ function log(item) {
     console.log(item);
 }
 
-// TODO: Write win & lose scenarios
 // TODO: Use GeneralResponse to wrap everything with exceptions handling
+// TODO: Implement admin-permissioned clear table option
