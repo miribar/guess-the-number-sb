@@ -9,5 +9,7 @@ public interface GameServices {
     void addGame(AtomicLong gameId, Game game);
 
     Game fetchGame();
+    
+    void adminLogin( String adminUserName, String adminPassword);
 
 }

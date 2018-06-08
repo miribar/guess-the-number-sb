@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.atomic.AtomicLong;
 
 @RestController                             //For serving REST requests, all responses default format is JSON
-@RequestMapping("/rest/api/")  		        //this creates the services main API endpoint
+@RequestMapping("/rest/api")  		        //this creates the services main API endpoint
 public class GameboardController {
 
     @Autowired                              //this injects the playerServices into the controller, wires them together

@@ -1,7 +1,5 @@
 package com.oem;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.concurrent.atomic.AtomicLong;
 
 public class Game {
@@ -11,8 +9,26 @@ public class Game {
     private int numOfMoves = 0;
     private int numDigitsInPlace = 0;
     private int numDigitsNotInPlace = 0;
+    private String adminUserName;
+    private String adminPassword;
 
-    public AtomicLong getGameId() {
+    public String getAdminUserName() {
+		return adminUserName;
+	}
+
+	public void setAdminUserName(String adminUserName) {
+		this.adminUserName = adminUserName;
+	}
+
+	public String getAdminPassword() {
+		return adminPassword;
+	}
+
+	public void setAdminPassword(String adminPassword) {
+		this.adminPassword = adminPassword;
+	}
+
+	public AtomicLong getGameId() {
         return gameId;
     }
 
