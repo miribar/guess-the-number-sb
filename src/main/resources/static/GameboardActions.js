@@ -195,7 +195,7 @@ function clearHighScoresTable() {
         alert("Please enter a valid Password!");
     } else {
         // This builds the DELETE request.
-        xhttp.open("DELETE", app.baseURL + "/deletescores/" + element("admin-pass").value, true);
+        xhttp.open("DELETE", app.baseURL + "/deletescores/" + adminPass, true);
         xhttp.send();
     }
 }
