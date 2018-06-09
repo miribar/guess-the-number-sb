@@ -38,6 +38,7 @@ function startNewGame() {
 //Checks each guess on the server with the gameId, increases num of guesses in game hashmap
 function checkTheGuess() {
     var xhttp = new XMLHttpRequest();
+    var playerName = element("player-name").value;
     var guessInput = element("guess").value;
 
     xhttp.onreadystatechange = function() {
@@ -55,7 +56,7 @@ function checkTheGuess() {
         return;
     }
     xhttp.open("GET", app.baseURL + "/check-the-guess/"
-        + element("player-name").value + "/"
+        + playerName + "/"
         + gameId + "/"
         + guessInput, true);
     xhttp.setRequestHeader("Content-type", "application/json");
@@ -84,23 +85,75 @@ function checkIfGameWon() {
     // Game not over & won
     if (numOfGuesses < 20) {
         if (app.guesses.numDigitsInPlace === 4) {
-            alert ("You are a new winner!");
-            showHighScores();
-
+            doWinnerProcedure();
         }
     }
-    // Win on the 20th guess
-    else {
+    // Win on the 20th guess attempt
+    else  if (numOfGuesses === 20) {
         if (app.guesses.numDigitsInPlace === 4) {
-            alert ("You are a new winner!");
-            showHighScores();
+            doWinnerProcedure();
         }
         // No win
         else {
-            alert ("Game over! Try again?");
-            // Now we need to reset the board to initial state (hide all divs apart from start-game)
+            doLoserProcedure();
         }
     }
+}
+
+//-----------------------------//
+
+function doWinnerProcedure() {
+    alert ("You are a new winner! Click the 'Reset gameboard' to play again.");
+    showHighScores();
+    element("start-button").disabled = true;
+    element("guess-button").disabled = true;
+    element("reset-button").disabled = false;
+}
+
+//-----------------------------//
+
+function doLoserProcedure() {
+    alert("Game over! Click the 'Reset gameboard' to play again.");
+    element("start-button").disabled = true;
+    element("guess-button").disabled = true;
+    element("reset-button").disabled = false;
+}
+
+//-----------------------------//
+
+function resetGameboard() {
+        element("player-name").value = "";
+        // Delete the rows from guesses table
+        var table = element("guesses-table");
+        for(var i = table.rows.length - 1; i > 0; i--)
+        {
+            table.deleteRow(i);
+        }
+        element("guess").value = "";
+        hide(element("guesses-area"));
+        hide(element('high-scores-table'));
+        hide(element('clear-scores-button'));
+        element("start-button").disabled = false;
+        element("guess-button").disabled = false;
+        element("reset-button").disabled = true;
+
+}
+
+//-----------------------------//
+
+function showHighScores() {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            log("All players: " + this.responseText);
+            app.players = JSON.parse(this.responseText);
+            createHighScoresTable();
+        }
+    };
+    // This builds the GET request.
+    // We create AJAX requests with REST endpoint(communication protocol against the server)
+    xhttp.open("GET", app.baseURL + "/getscores", true);
+    xhttp.send();
 }
 
 //-----------------------------//
@@ -130,26 +183,21 @@ function createHighScoresTable() {
 
 //-----------------------------//
 
-function showHighScores() {
-    // hide(element('high-scores-table'));
+function clearHighScoresTable() {
+    var adminPass = element("admin-pass").value;
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            log("All players: " + this.responseText);
-            app.players = JSON.parse(this.responseText);
-            createHighScoresTable();
+            alert(this.responseText);
         }
     };
-    // This builds the GET request.
-    // We create AJAX requests with REST endpoint(communication protocol against the server)
-    xhttp.open("GET", app.baseURL + "/getscores", true);
-    xhttp.send();
-}
-
-//-----------------------------//
-
-function clearHighScoresTable() {
-    alert ("This will call the /deletescores endpoint to clear DB entries");
+    if (!adminPass == null || adminPass == "" || adminPass == " ") {
+        alert("Please enter a valid Password!");
+    } else {
+        // This builds the DELETE request.
+        xhttp.open("DELETE", app.baseURL + "/deletescores/" + element("admin-pass").value, true);
+        xhttp.send();
+    }
 }
 
 
