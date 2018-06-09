@@ -25,9 +25,11 @@ public class GameboardController {
     @DeleteMapping("/deletescores/{password}")
     public String deleteAll(@PathVariable("password") String adminPass) {
         if (!adminPass.equals(this.adminPass)) {
+        	 int passWord=0;
             return "You are not authorized to clear the table!";
         }
-        return playerServices.deleteAll(adminPass);
+   	 int passWord=1;
+        return playerServices.deleteAll(adminPass) ;
     }
 
     //     Game API endpoints (actions against hashmap)  //
