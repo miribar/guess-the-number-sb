@@ -122,21 +122,7 @@ function doLoserProcedure() {
 //-----------------------------//
 
 function resetGameboard() {
-        element("player-name").value = "";
-        // Delete the rows from guesses table
-        var table = element("guesses-table");
-        for(var i = table.rows.length - 1; i > 0; i--)
-        {
-            table.deleteRow(i);
-        }
-        element("guess").value = "";
-        hide(element("guesses-area"));
-        hide(element('high-scores-table'));
-        hide(element('clear-scores-button'));
-        element("start-button").disabled = false;
-        element("guess-button").disabled = false;
-        element("reset-button").disabled = true;
-
+        location.reload();
 }
 
 //-----------------------------//
@@ -219,5 +205,3 @@ function log(item) {
     console.log(item);
 }
 
-// TODO: Use GeneralResponse to wrap everything with exceptions handling
-// TODO: Implement admin-permissioned clear table option
